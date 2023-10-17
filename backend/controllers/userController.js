@@ -1,6 +1,15 @@
+import User from '../models/User.js'
 
-const register = (req, res) => {
-    res.send('From API/USERS actual')
+const register = async (req, res) => {
+
+    try {
+        const user = new User(req.body)
+        const storedUser = await user.save()
+        res.json(storedUser);
+    } catch (error) {
+        console.log(error)
+    }
+
 }
 
 export {register}
