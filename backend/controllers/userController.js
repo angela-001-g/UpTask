@@ -68,10 +68,29 @@ const confirm = async(req, res) => {
         confirmUser.token = "";
         await confirmUser.save(); 
         res.json({msg: "Succesfully confirmed user"})
-     
+      
     } catch (error) {
         console.log(error)
     }
 }
 
-export {register, authenticate, confirm}
+const forgotPassword = async(req, res) => {
+    const { email } = req.body
+
+    const user = await User.findOne({email});
+    if(!user){
+        const error = new Error('Username does not exist')
+        return res.status(404).json({msg: error.message})
+    }
+
+    try {
+        user.token = generateId()
+        await user.save()
+        res.json({msg: "We have sent an e-mail with instructions"})
+    } catch (error) {
+        console.log(error)
+    }
+
+}
+
+export {register, authenticate, confirm, forgotPassword }
