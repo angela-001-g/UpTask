@@ -22,4 +22,24 @@ const register = async (req, res) => {
 
 }
 
-export {register}
+const authenticate = async (req, res) => {
+
+    const{email, password} = req.body;
+
+    // Comprobar si el usuario existe 
+    const user = await User.findOne({email})
+    if(!user){
+        const error = new Error('Username does not exist')
+        return res.status(404).json({msg: error.message})
+    }
+
+    // Comprobar si el usuario está confirmado
+    if(!user.confirmed){
+        const error = new Error('Your account has not been confirmed')
+        return res.status(403).json({msg: error.message})
+    }
+
+    // Comprobar su password
+}
+
+export {register, authenticate}
