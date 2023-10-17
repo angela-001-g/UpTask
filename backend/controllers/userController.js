@@ -54,4 +54,8 @@ const authenticate = async (req, res) => {
     }
 }
 
-export {register, authenticate}
+const confirm = async(req, res) => {
+    console.log(req.params)
+}
+
+export {register, authenticate, confirm}
