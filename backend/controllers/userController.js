@@ -133,4 +133,12 @@ const profile = async(req, res) => {
     res.json(user)
 }
 
-export {register, authenticate, confirm, forgotPassword, checkToken, newPassword, profile }
+export {
+    register, 
+    authenticate, 
+    confirm, 
+    forgotPassword, 
+    checkToken, 
+    newPassword, 
+    profile 
+}
