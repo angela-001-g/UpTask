@@ -11,7 +11,7 @@ const projectsSchema = mongoose.Schema({
         trim: true, 
         required: true
     },
-    dedadline: {
+    deadline: {
         type: Date,
         default: Date.now()
     },
