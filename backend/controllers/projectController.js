@@ -19,17 +19,23 @@ const newProject = async(req, res) => {
 }
 
 const getProject = async(req, res) => {
+    let project; 
     try {
         const id = new mongoose.Types.ObjectId(req.params.id.trim());
-        const project = await Project.findById(id)
+        project = await Project.findById(id)
         if(!project){
-            return res.status(404).json({msg: 'Project not found'})
+            const error = new Error('Project not found')
+            return res.status(404).json({msg: error.message})
         } 
     } catch (error) {
         return res.status(501).json({msg: 'Invalid Id'}) 
     }
+    if(project.creator.toString() !== req.user._id.toString()){
+        const error = new Error("Don't have permissions to acces")
+        return res.status(401).json({msg: error.message})
+    }
 
-
+    res.json(project)
 }
 
 const editProject = async(req, res) => {
