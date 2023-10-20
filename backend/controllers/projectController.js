@@ -31,7 +31,7 @@ const getProject = async(req, res) => {
         return res.status(501).json({msg: 'Invalid Id'}) 
     }
     if(project.creator.toString() !== req.user._id.toString()){
-        const error = new Error("Don't have permissions to acces")
+        const error = new Error("Invalid Action")
         return res.status(401).json({msg: error.message})
     }
 
@@ -39,7 +39,8 @@ const getProject = async(req, res) => {
 }
 
 const editProject = async(req, res) => {
-        let project; 
+
+    let project; 
     try {
         const id = new mongoose.Types.ObjectId(req.params.id.trim());
         project = await Project.findById(id)
@@ -51,7 +52,7 @@ const editProject = async(req, res) => {
         return res.status(501).json({msg: 'Invalid Id'}) 
     }
     if(project.creator.toString() !== req.user._id.toString()){
-        const error = new Error("Don't have permissions to acces")
+        const error = new Error("Invalid Action")
         return res.status(401).json({msg: error.message})
     }
 
@@ -69,6 +70,29 @@ const editProject = async(req, res) => {
 }
 
 const deleteProject = async(req, res) => {
+
+    let project; 
+    try {
+        const id = new mongoose.Types.ObjectId(req.params.id.trim());
+        project = await Project.findById(id)
+        if(!project){
+            const error = new Error('Project not found')
+            return res.status(404).json({msg: error.message})
+        } 
+    } catch (error) {
+        return res.status(501).json({msg: 'Invalid Id'}) 
+    }
+    if(project.creator.toString() !== req.user._id.toString()){
+        const error = new Error("Invalid Action")
+        return res.status(401).json({msg: error.message})
+    }
+
+    try {
+        await project.deleteOne();
+        res.json({msg: "Project deleted"})
+    } catch (error) {
+        console.log(error)
+    }
 
 }
 
