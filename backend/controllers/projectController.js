@@ -1,4 +1,5 @@
 import Project from "../models/Project.js"
+import mongoose from "mongoose"
 
 const getProjects = async(req, res) => {
     const projects = await Project.find().where('creator').equals(req.user)
@@ -18,6 +19,16 @@ const newProject = async(req, res) => {
 }
 
 const getProject = async(req, res) => {
+    try {
+        const id = new mongoose.Types.ObjectId(req.params.id.trim());
+        const project = await Project.findById(id)
+        if(!project){
+            return res.status(404).json({msg: 'Project not found'})
+        } 
+    } catch (error) {
+        return res.status(501).json({msg: 'Invalid Id'}) 
+    }
+
 
 }
 
