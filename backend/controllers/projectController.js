@@ -1,4 +1,5 @@
 import Project from "../models/Project.js"
+import Task from "../models/Task.js"
 import mongoose from "mongoose"
 
 const getProjects = async(req, res) => {
@@ -105,7 +106,19 @@ const deleteCollaborator = async(req, res) => {
 }
 
 const getTasks = async(req, res) => {
+    const { id } = req.params; 
 
+    const projectExist = await Project.findById(id)
+
+    if(!projectExist){
+        const error = new Error('Not found')
+        res.status(404).json({msg: error.message})
+    }
+
+    // Para obtener las tareas: Debes ser creador del proyecto o colaborador
+
+    const tasks = await Task.find().where('project').equals(id)
+    res.json(tasks)
 }
 
 export { 
