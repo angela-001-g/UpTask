@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import Alert from "../components/Alert"
 
 const Register = () => {
 
@@ -7,6 +8,22 @@ const Register = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const [repeatPassword, setRepeatPassword] = useState('')
+  const [alert, setAlert] = useState({})
+
+  const handleSubmit = e => {
+    e.preventDefault();
+
+    if([name, email, password, repeatPassword].includes('')){
+        setAlert({
+          msg: 'All fields are required',
+          error: true
+        })
+
+        return
+    }
+  }
+
+  const { msg } = alert 
 
   return (
     <>
@@ -14,7 +31,12 @@ const Register = () => {
           <span className="text-slate-700">projects</span>
       </h1>
 
-      <form className="my-10 bg-white shadow rounded-lg p-10">
+      { msg && <Alert alert={alert} /> }
+
+      <form
+       className="my-10 bg-white shadow rounded-lg p-10"
+       onSubmit={handleSubmit}
+      >
 
         <div className="my-5">
           <label 
