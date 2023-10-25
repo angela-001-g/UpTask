@@ -18,9 +18,30 @@ const Register = () => {
           msg: 'All fields are required',
           error: true
         })
-
         return
     }
+
+    if(password !== repeatPassword){
+      setAlert({
+        msg: 'The password does not match',
+        error: true
+      })
+      return
+    }
+
+    if(password.length < 6){
+      setAlert({
+        msg: 'Password is too short, add at least 6 characters',
+        error: true
+      })
+      return
+    }
+
+    setAlert({})
+
+    // Crear el usuario en la API
+
+    console.log('creando...')
   }
 
   const { msg } = alert 
