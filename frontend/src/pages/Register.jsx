@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
+import axios from 'axios'
 import Alert from "../components/Alert"
 
 const Register = () => {
@@ -10,7 +11,7 @@ const Register = () => {
   const [repeatPassword, setRepeatPassword] = useState('')
   const [alert, setAlert] = useState({})
 
-  const handleSubmit = e => {
+  const handleSubmit = async e => {
     e.preventDefault();
 
     if([name, email, password, repeatPassword].includes('')){
@@ -41,7 +42,19 @@ const Register = () => {
 
     // Crear el usuario en la API
 
-    console.log('creando...')
+    try {
+      const { data } = await axios.post('http://localhost:4000/api/users', {name, email, password})
+
+      setAlert({
+        msg: data.msg,
+        error: false
+      })
+    } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true
+      })
+    }
   }
 
   const { msg } = alert 
