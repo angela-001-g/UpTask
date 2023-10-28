@@ -15,8 +15,8 @@ const register = async (req, res) => {
     try {
         const user = new User(req.body)
         user.token = generateId();
-        const storedUser = await user.save()
-        res.json(storedUser);
+        await user.save()
+        res.json({msg: "user created succesfully, check your email to confirm your account"});
     } catch (error) {
         console.log(error)
     }
