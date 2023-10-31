@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom"
 import { useState } from "react"
 import Alert from "../components/Alert"
+import axios from 'axios'
 
 const ForgotPassword = () => {
 
@@ -17,6 +18,18 @@ const ForgotPassword = () => {
       })
       return
     }
+
+    try {
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/forgot-password`, { email })
+
+      console.log(data)
+    } catch (error) {
+      setAlert({
+        msg: error.response.data.msg,
+        error: true
+      })
+    }
+
   }
 
   const { msg } = alert
