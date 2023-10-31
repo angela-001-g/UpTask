@@ -1,13 +1,38 @@
 import { Link } from "react-router-dom"
+import { useState } from "react"
+import Alert from "../components/Alert"
 
 const ForgotPassword = () => {
+
+  const [email, setEmail] = useState('')
+  const [alert, setAlert] = useState({})
+
+  const handleSubmit = async e => {
+    e.preventDefault()
+
+    if(email === '' || email.length < 6){
+      setAlert({
+        msg: 'Email is mandatory',
+        error: true
+      })
+      return
+    }
+  }
+
+  const { msg } = alert
+
   return (
     <>
       <h1 className="text-violet-600 font-black text-6xl capitalize">Recover your access and dont lose your {''}
         <span className="text-slate-700">projects</span>
       </h1>
 
-      <form className="my-10 bg-white shadow rounded-lg p-10">
+      {msg && <Alert alert={alert} />}
+
+      <form 
+        className="my-10 bg-white shadow rounded-lg p-10"
+        onSubmit={handleSubmit}
+      >
         <div className="my-5">
           <label 
             className="uppercase text-gray-600 block text-xl font-bold"
@@ -18,6 +43,8 @@ const ForgotPassword = () => {
             type="email"
             placeholder="Registration email"
             className="w-full mt-3 p-3 border rounded-xl bg-gray-50"
+            value={email}
+            onChange={e => setEmail(e.target.value)}
           />
         </div>
 

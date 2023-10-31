@@ -51,7 +51,7 @@ const ConfirmAccount = () => {
             >Log In</Link>
         )}
       </div>
-    </>
+    </> 
   )
 }
 
