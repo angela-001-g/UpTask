@@ -20,10 +20,13 @@ const ForgotPassword = () => {
     }
 
     try {
-      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/users/forgot-password`, { email })
+      const { data } = await axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/users/forgot-password`, { email })
       console.log(data)
     } catch (error) {
-        console.log(error.request.statusText) 
+        setAlert({
+          msg: error.response.data.msg, 
+          error: true
+        })
     }
 
   }

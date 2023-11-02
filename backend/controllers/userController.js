@@ -86,17 +86,16 @@ const confirm = async(req, res) => {
 
 const forgotPassword = async(req, res) => {
     const { email } = req.body
-
     const user = await User.findOne({email});
     if(!user){
-        const error = new Error('Username does not exist')
+        const error = new Error('Email does not exist')
         return res.status(404).json({msg: error.message})
     }
 
     try {
         user.token = generateId()
         await user.save()
-        res.json({msg: "We have sent an e-mail with instructions"})
+        res.json({msg: "We have sent an e-mail with instructions" })
     } catch (error) {
         console.log(error)
     }
