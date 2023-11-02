@@ -1,14 +1,16 @@
 /* eslint-disable react/prop-types */
-import { createContext } from "react";
+import { createContext, useState } from "react";
 
 const AuthContext = createContext()
 
 const AuthProvider = ({children}) => {
 
+    const [auth, setAuth] = useState({})
+
     return (
         <AuthContext.Provider
             value={{
-
+                setAuth
             }}
         >
             {children}
