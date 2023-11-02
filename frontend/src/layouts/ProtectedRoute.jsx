@@ -3,12 +3,13 @@ import useAuth from "../hooks/useAuth"
 
 const ProtectedRoute = () => {
 
-    const { auth } = useAuth()
-    console.log(auth)
+    const { auth, charging } = useAuth()
+    
+    if(charging) return 'Cargando...'
 
   return (
     <>
-        {auth._id ? 'Autenticado' : <Navigate to='/' />}
+        {auth._id ? <Outlet /> : <Navigate to='/' />}
     </>
   )
 }
