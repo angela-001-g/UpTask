@@ -1,4 +1,6 @@
 import { useState } from "react"
+import useProjects from "../hooks/useProjects"
+import Alert from "./Alert"
 
 const FormProject = () => {
 
@@ -6,12 +8,34 @@ const FormProject = () => {
     const[description, setDescription] = useState('')
     const[deadline, setDeadline] = useState('')
     const[customer, setCustomer] = useState('')
+
+    const { showAlert, alert, submitProject } = useProjects()
+
+    const handleSubmit = e => {
+        e.preventDefault()
+
+        if([name, description, deadline, customer].includes('')){
+            showAlert({
+                msg: 'All fields are required',
+                error: true
+            })
+            return
+        }
+
+        // Pasar datos hacia el provider 
+        submitProject({name, description, deadline, customer})
+    }
+
+    const { msg } = alert
     
   return (
     <>
         <form
             className="bg-white py-10 px-5 md:w-1/2 rounded-lg shadow"
+            onSubmit={handleSubmit}
         >
+            {msg && <Alert alert={alert}/>}
+
             <div className="mb-5">
                 <label
                     className="text-gray-700 uppercase font-bold text-sm"
