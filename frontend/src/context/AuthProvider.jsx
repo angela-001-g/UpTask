@@ -26,7 +26,7 @@ const AuthProvider = ({children}) => {
                 const { data } = await clientAxios('/users/profile', config)
                 setAuth(data)
             } catch (error) {
-                
+                console.log(error)
             }
         }
         authenticateUser()
@@ -35,6 +35,7 @@ const AuthProvider = ({children}) => {
     return (
         <AuthContext.Provider
             value={{
+                auth,
                 setAuth
             }}
         >
