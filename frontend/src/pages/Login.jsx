@@ -1,4 +1,4 @@
-import { Link, useNavigate } from "react-router-dom"
+import { Link } from "react-router-dom"
 import { useState } from "react"
 import Alert from "../components/Alert"
 import clientAxios from "../config/clientAxios"
