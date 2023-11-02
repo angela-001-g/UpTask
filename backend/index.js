@@ -20,12 +20,12 @@ const whitelist = [process.env.FRONTEND_URL]
 const corsOptions = {
     origin: function(origin, callback){
 
-        if(whitelist.includes(origin)){
+        if(whitelist.indexOf(origin) !== -1 || !origin){
             // Puede consultar la API
             callback(null, true)
         } else {
             // No está permitido
-            callback(new Error('Cors Error'))
+            callback(new Error('Cors error'))
         }
     }
 }
