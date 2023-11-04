@@ -11,6 +11,7 @@ import ProtectedRoute from './layouts/ProtectedRoute'
 import Projects from './pages/Projects'
 import NewProject from './pages/NewProject'
 import Project from './pages/Project'
+import EditProject from './components/EditProject'
 
 function App() {
   return (
@@ -31,6 +32,7 @@ function App() {
                 <Route index element={<Projects />} />
                 <Route path='create-project' element={<NewProject />} />
                 <Route path=':id' element={<Project />} />
+                <Route path='edit/:id' element={<EditProject />} />
               </Route>
             </Routes>
           </ProjectsProvider>

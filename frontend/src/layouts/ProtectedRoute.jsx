@@ -7,7 +7,7 @@ const ProtectedRoute = () => {
 
     const { auth, charging } = useAuth()
     
-    if(charging) return 'Cargando...'
+    if(charging) return 'Loading...'
 
   return (
     <>
