@@ -6,17 +6,25 @@ const Project = () => {
 
   const params = useParams()
 
-  const { getProject } = useProjects()
+  const { getProject, project, charging } = useProjects()
 
   useEffect(() => {
     getProject(params.id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  const { name } = project
+
   return (
-    <div>
-      Project
-    </div>
+    <>
+      {charging ? '...' : (
+          <div>
+              <h1 className='font-black text-4xl'>{name}</h1>
+          </div>
+      )}
+
+    </>
+
   )
 }
 
