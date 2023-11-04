@@ -35,15 +35,7 @@ const getProject = async(req, res) => {
         const error = new Error("Invalid Action")
         return res.status(401).json({msg: error.message})
     }
-
-    // Obtener las tareas del proyecto 
-
-    const tasks = await Task.find().where('project').equals(project._id)
-    res.json({
-        project,
-        tasks
-    })
-
+    res.json(project)
 }
 
 const editProject = async(req, res) => {
