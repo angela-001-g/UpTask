@@ -1,5 +1,5 @@
 import { useParams, Link } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import useProjects from '../hooks/useProjects'
 import ModalFormTask from '../components/ModalFormTask'
 
@@ -8,6 +8,8 @@ const Project = () => {
   const params = useParams()
 
   const { getProject, project, charging } = useProjects()
+
+  const [modal, setModal] = useState(false)
 
   useEffect(() => {
     getProject(params.id)
@@ -20,7 +22,6 @@ const Project = () => {
 
   return (
     <>
-
           <div className='flex justify-between'> 
               <h1 className='font-black text-4xl'>{name}</h1>
               <div className='flex items-center gap-2 text-gray-400 hover:text-black'>
@@ -37,6 +38,7 @@ const Project = () => {
           </div>
 
           <button
+            onClick={() => setModal(true)}
             type='button'
             className='text-sm px-5 mt-5 py-3 w-full md:w-auto rounded-lg uppercase font-bold bg-violet-400 text-white text-center flex gap-2 items-center justify-center'
           >
@@ -45,7 +47,10 @@ const Project = () => {
             </svg>
           New Task</button>
 
-          <ModalFormTask />
+          <ModalFormTask
+            modal={modal}
+            setModal={setModal}
+          />
 
     </>
 
