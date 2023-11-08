@@ -1,12 +1,18 @@
 /* eslint-disable react/prop-types */
-import { Fragment } from 'react'
+import { Fragment, useState } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import useProjects from '../hooks/useProjects'
 
 
 const ModalFormularioTarea = () => {
 
+    const PRIORITY = ["Low", "Medium", "High"]
+
     const { modalFormTask, handleModalTask } = useProjects()
+
+    const[name, setName] = useState('')
+    const[description, setDescription] = useState('')
+    const[priority, setPriority] = useState('')
  
     return (
         <Transition.Root show={ modalFormTask } as={Fragment}>
@@ -60,10 +66,71 @@ const ModalFormularioTarea = () => {
                             <div className="sm:flex sm:items-start">
                                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                     <Dialog.Title as="h3" className="text-lg leading-6 font-bold text-gray-900">
-                                        <h1 className='text-4xl'>Title</h1>
+                                        Create Task
                                     </Dialog.Title>
 
-                                    <p>Content</p>
+                                    <form className='my-10'>
+                                        <div className='mb-5'>
+                                            <label 
+                                                className='text-gray-700 uppercase font-bold text-sm'
+                                                htmlFor='name'
+                                            >
+                                                Task Name
+                                            </label>
+                                            <input
+                                                type="text"
+                                                id='name'
+                                                placeholder='Task Name'
+                                                className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                                                value={name}
+                                                onChange={e => setName(e.target.value)}
+                                            />
+                                        </div>
+
+                                        <div className='mb-5'>
+                                            <label 
+                                                className='text-gray-700 uppercase font-bold text-sm'
+                                                htmlFor='description'
+                                            >
+                                                Description Task
+                                            </label>
+                                            <textarea
+                                                id='description'
+                                                placeholder='Describe your task'
+                                                className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                                                value={description}
+                                                onChange={e => setDescription(e.target.value)}
+                                            />
+                                        </div>
+
+                                        <div className='mb-5'>
+                                            <label 
+                                                className='text-gray-700 uppercase font-bold text-sm'
+                                                htmlFor='priority'
+                                            >
+                                                Priority
+                                            </label>
+                                            <select
+                                                id='priority'
+                                                className='border-2 w-full p-2 mt-2 placeholder-gray-400 rounded-md'
+                                                value={priority}
+                                                onChange={e => setPriority(e.target.value)}
+                                            >
+                                                <option value="">-- Select --</option>
+
+                                                {PRIORITY.map(option => (
+                                                    <option key={option}>{option}</option>
+                                                ))}
+                                            </select>    
+                                        </div>
+
+                                        <input 
+                                            type="submit"
+                                            className='bg-violet-600 hover:bg-violet-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded text-sm'
+                                            value="Create Task"
+                                        />
+
+                                    </form>
 
                                 </div>
                             </div>
