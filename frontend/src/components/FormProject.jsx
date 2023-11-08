@@ -23,8 +23,6 @@ const FormProject = () => {
             setDescription(project.description)
             setDeadline(project.deadline?.split('T')[0])
             setCustomer(project.customer)
-        } else {
-            console.log('Nuevo Proyecto')
         }
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [params])
