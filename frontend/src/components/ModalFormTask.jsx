@@ -9,17 +9,34 @@ const PRIORITY = ["Low", "Medium", "High"]
 
 const ModalFormularioTarea = () => {
 
-
-    const { modalFormTask, handleModalTask, showAlert, alert, submitTask, task } = useProjects()
-
-    useEffect(() => {
-        console.log(task)
-    }, [task])
-
+    const[id, setId] = useState('')
     const[name, setName] = useState('')
     const[description, setDescription] = useState('')
     const[deadline, setDeadline] = useState('')
     const[priority, setPriority] = useState('')
+
+    const { modalFormTask, handleModalTask, showAlert, alert, submitTask, task } = useProjects()
+
+    useEffect(() => {
+
+        if(task?._id) {
+            setId(task._id)
+            setName(task.name)
+            setDescription(task.description)
+            setDeadline(task.deadline?.split('T')[0])
+            setPriority(task.priority)
+            return
+        }
+
+        setId('')
+        setName('')
+        setDescription('')
+        setDeadline('')
+        setPriority('')
+
+    }, [task])
+
+
 
     const params = useParams()
 
@@ -96,7 +113,7 @@ const ModalFormularioTarea = () => {
                             <div className="sm:flex sm:items-start">
                                 <div className="mt-3 text-center sm:mt-0 sm:ml-4 sm:text-left w-full">
                                     <Dialog.Title as="h3" className="text-lg leading-6 font-bold text-gray-900">
-                                        Create Task
+                                        {id ? 'Edit Task' : 'Create Task'}
                                     </Dialog.Title>
 
                                     {msg && <Alert alert={alert} />}
@@ -178,7 +195,7 @@ const ModalFormularioTarea = () => {
                                         <input 
                                             type="submit"
                                             className='bg-violet-600 hover:bg-violet-700 w-full p-3 text-white uppercase font-bold cursor-pointer transition-colors rounded text-sm'
-                                            value="Create Task"
+                                            value={id ? 'Save Changes' : 'Create Task'}
                                         />
 
                                     </form>

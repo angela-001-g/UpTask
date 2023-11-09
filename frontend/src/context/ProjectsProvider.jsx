@@ -182,6 +182,7 @@ const ProjectsProvider = ({children}) => {
 
     const handleModalTask = () => {
         setModalFormTask(!modalFormTask)
+        setTask({})
     }
 
     const submitTask = async task => {
