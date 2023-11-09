@@ -1,7 +1,10 @@
 /* eslint-disable react/prop-types */
 import { formatDate } from "../helpers/formatDate"
+import useProjects from "../hooks/useProjects"
 
 const Task = ({task}) => {
+
+    const { handleModalEditTask } =useProjects()
 
     const { description, name, priority, deadline, state, _id } = task
 
@@ -18,6 +21,7 @@ const Task = ({task}) => {
             <div className="flex gap-2">
                 <button
                     className="bg-fuchsia-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+                    onClick={() => handleModalEditTask(task)}
                 >Edit</button>
 
                 {state ? (

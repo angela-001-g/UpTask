@@ -1,5 +1,5 @@
 /* eslint-disable react/prop-types */
-import { Fragment, useState } from 'react'
+import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import useProjects from '../hooks/useProjects'
 import Alert from './Alert'
@@ -10,7 +10,11 @@ const PRIORITY = ["Low", "Medium", "High"]
 const ModalFormularioTarea = () => {
 
 
-    const { modalFormTask, handleModalTask, showAlert, alert, submitTask } = useProjects()
+    const { modalFormTask, handleModalTask, showAlert, alert, submitTask, task } = useProjects()
+
+    useEffect(() => {
+        console.log(task)
+    }, [task])
 
     const[name, setName] = useState('')
     const[description, setDescription] = useState('')
