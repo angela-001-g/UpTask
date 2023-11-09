@@ -3,7 +3,7 @@ import Task from "../models/Task.js"
 import mongoose from "mongoose"
 
 const getProjects = async(req, res) => {
-    const projects = await Project.find().where('creator').equals(req.user)
+    const projects = await Project.find().where('creator').equals(req.user).select('-tasks')
     res.json(projects)
 }
 
@@ -23,7 +23,7 @@ const getProject = async(req, res) => {
     let project; 
     try {
         const id = new mongoose.Types.ObjectId(req.params.id.trim());
-        project = await Project.findById(id)
+        project = await Project.findById(id).populate('tasks')
         if(!project){
             const error = new Error('Project not found')
             return res.status(404).json({msg: error.message})
