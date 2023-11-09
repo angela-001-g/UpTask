@@ -186,6 +186,16 @@ const ProjectsProvider = ({children}) => {
     }
 
     const submitTask = async task => {
+
+        if(task?.id){
+           await editTask(task) 
+        } else {
+           await createTask(task)
+        }
+
+    }
+
+    const createTask = async task => {
         try {
             const token = localStorage.getItem('token')
             if(!token) return 
@@ -204,6 +214,28 @@ const ProjectsProvider = ({children}) => {
             updateProject.tasks = [...project.tasks, data]
 
             setProject(updateProject)
+            setAlert({})
+            setModalFormTask(false)
+
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
+    const editTask = async task => {
+        try {
+            const token = localStorage.getItem('token')
+            if(!token) return 
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.put(`/tasks/${task.id}`, task, config)
+            
             setAlert({})
             setModalFormTask(false)
 
