@@ -92,7 +92,7 @@ const deleteTask = async(req, res) => {
 
     try {
         await task.deleteOne()
-        res.json({msg: "Deleted Task"})
+        res.json({msg: "The task was deleted"})
     } catch (error) {
         console.log(error)
     }
