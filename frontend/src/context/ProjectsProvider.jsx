@@ -195,8 +195,16 @@ const ProjectsProvider = ({children}) => {
                 }
             }
 
-            await clientAxios.post(`/tasks`, task, config)
-            
+            const {data} = await clientAxios.post(`/tasks`, task, config)
+
+            // Agregar la tarea al state
+            const updateProject = {...project}
+            updateProject.tasks = [...project.tasks, data]
+
+            setProject(updateProject)
+            setAlert({})
+            setModalFormTask(false)
+
         } catch (error) {
             console.log(error)
         }
