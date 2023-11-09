@@ -6,9 +6,9 @@ const Task = ({task}) => {
 
     const { handleModalEditTask, handleModalDeleteTask } =useProjects()
 
-    const { description, name, priority, deadline, state } = task
+    const { description, name, priority, deadline, state, _id } = task
 
-  return (
+  return ( 
     <>
         <div className="border-b p-5 flex justify-between items-center ">
             <div>

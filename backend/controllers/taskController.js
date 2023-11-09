@@ -48,10 +48,12 @@ const getTask = async(req, res) => {
 } 
 
 const updateTask = async(req, res) => {
+
     const { id } = req.params;
+    id = new mongoose.Types.ObjectId(req.params.id.trim());
 
     const task = await Task.findById(id).populate("project")
-
+ 
     if(!task){
         const error = new Error('Task not found')
         return res.status(404).json({msg: error.message})
