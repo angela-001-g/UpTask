@@ -15,6 +15,7 @@ const ProjectsProvider = ({children}) => {
     const [task, setTask] = useState({})
     const [modalDeleteTask, setModalDeleteTask] = useState(false)
 
+
     const navigate = useNavigate()
 
     useEffect(() => {
@@ -187,7 +188,6 @@ const ProjectsProvider = ({children}) => {
     }
 
     const submitTask = async task => {
-
         if(task?.id){
            await editTask(task) 
         } else {
@@ -195,6 +195,7 @@ const ProjectsProvider = ({children}) => {
         }
 
     }
+
 
     const createTask = async task => {
         try {
@@ -207,12 +208,15 @@ const ProjectsProvider = ({children}) => {
                     Authorization: `Bearer ${token}`
                 }
             }
-
+            
             const {data} = await clientAxios.post(`/tasks`, task, config)
 
+            console.log(data)
+
             // Agregar la tarea al state
+            
             const updateProject = {...project}
-            updateProject.tasks = [...project.taskk, data]
+            updateProject.tasks = [...project.task, data]
 
             setProject(updateProject)
             setAlert({})
@@ -294,6 +298,10 @@ const ProjectsProvider = ({children}) => {
         }
     }
 
+    const submitCollaborator = async email => {
+        console.log(email)
+    }
+
     return(
         <ProjectsContext.Provider
             value={{
@@ -313,6 +321,7 @@ const ProjectsProvider = ({children}) => {
                 handleModalDeleteTask,
                 modalDeleteTask,
                 deleteTask,
+                submitCollaborator
             }}
         > {children}
         </ProjectsContext.Provider>

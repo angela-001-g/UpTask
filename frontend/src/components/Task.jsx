@@ -4,7 +4,7 @@ import useProjects from "../hooks/useProjects"
 
 const Task = ({task}) => {
 
-    const { handleModalEditTask, handleModalDeleteTask } =useProjects()
+    const { handleModalEditTask, handleModalDeleteTask } = useProjects()
 
     const { description, name, priority, deadline, state, _id } = task
 

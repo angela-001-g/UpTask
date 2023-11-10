@@ -1,15 +1,21 @@
 import Project from "../models/Project.js"
 import Task from "../models/Task.js"
+import mongoose from "mongoose";
 
 const addTask = async(req, res) => {
     
     const { project } = req.body;
 
-    const projectExist = await Project.findById(project)
-    
-    if(!projectExist){
-        const error = new Error('Project does not exist')
-        return res.status(404).json({msg: error.message})
+    try {
+        const id = new mongoose.Types.ObjectId(project._id.trim());
+        const projectExist = await Project.findById(id)
+        if(!projectExist){
+            const error = new Error('Project does not exist')
+            return res.status(404).json({msg: error.message})
+        }
+            
+    } catch (error) {
+        return res.status(501).json({msg: 'Invalid Id'}) 
     }
 
     if(projectExist.creator.toString() !== req.user._id.toString()){
@@ -50,7 +56,7 @@ const getTask = async(req, res) => {
 const updateTask = async(req, res) => {
 
     const { id } = req.params;
-    id = new mongoose.Types.ObjectId(req.params.id.trim());
+
 
     const task = await Task.findById(id).populate("project")
  
