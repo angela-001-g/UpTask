@@ -14,6 +14,7 @@ const ProjectsProvider = ({children}) => {
     const [modalFormTask, setModalFormTask] = useState(false)
     const [task, setTask] = useState({})
     const [modalDeleteTask, setModalDeleteTask] = useState(false)
+    const [colaborator, setCollaborator] = useState({})
 
 
     const navigate = useNavigate()
@@ -302,6 +303,7 @@ const ProjectsProvider = ({children}) => {
     }
 
     const submitCollaborator = async email => {
+        setCharging(true)
         try {
             const token = localStorage.getItem('token')
             if(!token) return 
@@ -314,10 +316,17 @@ const ProjectsProvider = ({children}) => {
             }
 
             const { data } = await clientAxios.post('/projects/collaborators', {email}, config)
-            console.log(data)
+
+            setCollaborator(data)
+            setAlert({})
 
         } catch (error) {
-            console.log(error.response)
+            setAlert({
+                msg: error.response.data.msg,
+                error: true
+            })
+        } finally {
+            setCharging(false)
         }
     }
 
