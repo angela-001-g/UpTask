@@ -6,31 +6,29 @@ const addTask = async(req, res) => {
     
     const { project } = req.body;
 
+
     try {
-        const id = new mongoose.Types.ObjectId(project._id.trim());
+        const id = new mongoose.Types.ObjectId(project.trim());
         const projectExist = await Project.findById(id)
         if(!projectExist){
             const error = new Error('Project does not exist')
             return res.status(404).json({msg: error.message})
         }
-            
-    } catch (error) {
-        return res.status(501).json({msg: 'Invalid Id'}) 
-    }
 
-    if(projectExist.creator.toString() !== req.user._id.toString()){
-        const error = new Error('You dont have permissions to add tasks')
-        return res.status(403).json({msg: error.message})
-    }
-
-    try {
-        const storageTask = await Task.create(req.body)
+        if(projectExist.creator.toString() !== req.user._id.toString()){
+            const error = new Error('You dont have permissions to add tasks')
+            return res.status(403).json({msg: error.message})
+        }
+   
+        const storageTask = await Task.create({...req.body, project: new mongoose.Types.ObjectId(id)})
         // Almacenar ID en el proyecto
         projectExist.tasks.push(storageTask._id);
         await projectExist.save();
         res.json(storageTask);
+             
     } catch (error) {
         console.log(error)
+        return res.status(501).json({msg: 'Invalid Id'}) 
     }
 
 } 
@@ -56,7 +54,6 @@ const getTask = async(req, res) => {
 const updateTask = async(req, res) => {
 
     const { id } = req.params;
-
 
     const task = await Task.findById(id).populate("project")
  

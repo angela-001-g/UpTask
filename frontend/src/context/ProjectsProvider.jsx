@@ -182,10 +182,7 @@ const ProjectsProvider = ({children}) => {
         }
     }
 
-    const handleModalTask = () => {
-        setModalFormTask(!modalFormTask)
-        setTask({})
-    }
+
 
     const submitTask = async task => {
         if(task?.id){
@@ -193,7 +190,6 @@ const ProjectsProvider = ({children}) => {
         } else {
            await createTask(task)
         }
-
     }
 
 
@@ -208,6 +204,8 @@ const ProjectsProvider = ({children}) => {
                     Authorization: `Bearer ${token}`
                 }
             }
+
+            console.log(task)
             
             const {data} = await clientAxios.post(`/tasks`, task, config)
 
@@ -252,6 +250,11 @@ const ProjectsProvider = ({children}) => {
         } catch (error) {
             console.log(error)
         }
+    }
+
+    const handleModalTask = () => {
+        setModalFormTask(!modalFormTask)
+        setTask({})
     }
 
     const handleModalEditTask = task => {
