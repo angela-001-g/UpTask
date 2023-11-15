@@ -314,8 +314,8 @@ const ProjectsProvider = ({children}) => {
             }
 
             const { data } = await clientAxios.post('/projects/collaborators', {email}, config)
-
             console.log(data)
+
         } catch (error) {
             console.log(error.response)
         }

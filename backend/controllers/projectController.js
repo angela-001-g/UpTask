@@ -97,19 +97,22 @@ const deleteProject = async(req, res) => {
 }
 
 const searchCollaborator = async (req, res) => {
-    console.log(req.body)
+    try {
+        const { email } = req.body
+        const user = await User.findOne({email})
+        if(!user){
+            const error = new Error('User not found')
+            return res.status(404).json({msg: error.message})
+        }
+    
+        res.json(user)
+    } catch (error) {
+        console.log('Error in addCollaborator')
+    }
 }
 
 const addCollaborator = async(req, res) => {
-    const { email } = req.body
-    const user = await User.findOne({email})
 
-    if(!user){
-        const error = new Error('User not found')
-        return res.status(404).json({msg: error.message})
-    }
-
-    res.json(user)
 }
 
 const deleteCollaborator = async(req, res) => {
