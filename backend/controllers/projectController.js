@@ -1,5 +1,5 @@
 import Project from "../models/Project.js"
-import Task from "../models/Task.js"
+import User from "../models/User.js"
 import mongoose from "mongoose"
 
 const getProjects = async(req, res) => {
@@ -96,8 +96,20 @@ const deleteProject = async(req, res) => {
 
 }
 
-const addCollaborator = async(req, res) => {
+const searchCollaborator = async (req, res) => {
+    console.log(req.body)
+}
 
+const addCollaborator = async(req, res) => {
+    const { email } = req.body
+    const user = await User.findOne({email})
+
+    if(!user){
+        const error = new Error('User not found')
+        return res.status(404).json({msg: error.message})
+    }
+
+    res.json(user)
 }
 
 const deleteCollaborator = async(req, res) => {
@@ -113,4 +125,5 @@ export {
     deleteProject, 
     addCollaborator, 
     deleteCollaborator, 
+    searchCollaborator
 }
