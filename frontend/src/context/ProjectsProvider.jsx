@@ -14,7 +14,7 @@ const ProjectsProvider = ({children}) => {
     const [modalFormTask, setModalFormTask] = useState(false)
     const [task, setTask] = useState({})
     const [modalDeleteTask, setModalDeleteTask] = useState(false)
-    const [colaborator, setCollaborator] = useState({})
+    const [collaborator, setCollaborator] = useState({})
 
 
     const navigate = useNavigate()
@@ -330,6 +330,10 @@ const ProjectsProvider = ({children}) => {
         }
     }
 
+    const addCollaborator = async email => {
+        console.log(email)
+    }
+
     return(
         <ProjectsContext.Provider
             value={{
@@ -349,7 +353,9 @@ const ProjectsProvider = ({children}) => {
                 handleModalDeleteTask,
                 modalDeleteTask,
                 deleteTask,
-                submitCollaborator
+                submitCollaborator,
+                collaborator,
+                addCollaborator
             }}
         > {children}
         </ProjectsContext.Provider>
