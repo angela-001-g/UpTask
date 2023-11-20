@@ -36,7 +36,7 @@ const getProject = async(req, res) => {
     } catch (error) {
         return res.status(501).json({msg: 'Invalid Id'}) 
     }
-    if(project.creator.toString() !== req.user._id.toString()){
+    if(project.creator.toString() !== req.user._id.toString() && !project.collaborators.some(collaborator => collaborator._id.toString() === req.user._id.toString())){
         const error = new Error("Invalid Action")
         return res.status(401).json({msg: error.message})
     }
