@@ -2,10 +2,11 @@ import FormCollaborator from "../components/FormCollaborator"
 import { useEffect } from "react"
 import useProjects from "../hooks/useProjects"
 import { useParams } from "react-router-dom"
+import Alert from "../components/Alert"
 
 const NewCollaborator = () => {
 
-  const { getProject, project, charging, collaborator, addCollaborator } = useProjects()
+  const { getProject, project, charging, collaborator, addCollaborator, alert } = useProjects()
 
   const params = useParams() 
 
@@ -13,6 +14,8 @@ const NewCollaborator = () => {
     getProject(params.id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  if(!project?._id) return <Alert alert={alert} />
 
   return (
     <>

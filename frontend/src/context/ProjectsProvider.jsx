@@ -144,7 +144,10 @@ const ProjectsProvider = ({children}) => {
             setProject(data)
 
         } catch (error) {
-            console.log(error)
+            setAlert({
+                msg: error.response.data.msg, 
+                error: true
+            })
         } finally {
             setCharging(false)
         }
@@ -331,7 +334,32 @@ const ProjectsProvider = ({children}) => {
     }
 
     const addCollaborator = async email => {
-        console.log(email)
+        try {
+            const token = localStorage.getItem('token')
+            if(!token) return 
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.post(`/projects/collaborators/${project._id}`, email, config)
+
+            setAlert({
+                msg: data.msg,
+                error: false
+            })
+            setCollaborator({})
+            setAlert({})
+
+        } catch (error) {
+            setAlert({
+                msg: error.response.data.msg,
+                error: true
+            })
+        }
     }
 
     return(
