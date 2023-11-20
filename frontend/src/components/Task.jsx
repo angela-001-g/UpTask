@@ -1,12 +1,15 @@
 /* eslint-disable react/prop-types */
 import { formatDate } from "../helpers/formatDate"
 import useProjects from "../hooks/useProjects"
+import useAdmin from "../hooks/useAdmin"
 
 const Task = ({task}) => {
 
     const { handleModalEditTask, handleModalDeleteTask } = useProjects()
 
-    const { description, name, priority, deadline, state, _id } = task
+    const { description, name, priority, deadline, state } = task
+
+    const admin = useAdmin()
 
   return ( 
     <>
@@ -19,10 +22,12 @@ const Task = ({task}) => {
             </div>
 
             <div className="flex gap-2">
-                <button
-                    className="bg-fuchsia-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
-                    onClick={() => handleModalEditTask(task)}
-                >Edit</button>
+                {admin && ( 
+                    <button
+                        className="bg-fuchsia-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
+                        onClick={() => handleModalEditTask(task)}
+                    >Edit</button>
+                )}
 
                 {state ? (
                     <button
@@ -34,10 +39,13 @@ const Task = ({task}) => {
                     >Incomplete</button>
                 )}
 
+                {admin && ( 
                 <button
                     onClick={() => handleModalDeleteTask(task)}
                     className="bg-red-600 px-4 py-3 text-white uppercase font-bold text-sm rounded-lg"
                 >Delete</button>
+                )}
+                
             </div>
         </div>
     </>
