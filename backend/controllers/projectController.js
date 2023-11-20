@@ -3,7 +3,12 @@ import User from "../models/User.js"
 import mongoose from "mongoose"
 
 const getProjects = async(req, res) => {
-    const projects = await Project.find().where('creator').equals(req.user).select('-tasks')
+    const projects = await Project.find({
+        '$or' : [
+            {'collaborators': { $in: req.user}},
+            {'creator': { $in: req.user}}
+        ]
+    }).select('-tasks')
     res.json(projects)
 }
 
