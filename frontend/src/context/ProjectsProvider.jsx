@@ -353,8 +353,11 @@ const ProjectsProvider = ({children}) => {
                 msg: data.msg,
                 error: false
             })
+
             setCollaborator({})
-            setAlert({})
+            setTimeout(() => {
+                setAlert({})
+            }, 2000)
 
         } catch (error) {
             setAlert({
@@ -362,6 +365,7 @@ const ProjectsProvider = ({children}) => {
                 error: true
             })
         }
+
     }
 
     const handleModalDeleteCollaborator = collaborator => {
@@ -370,8 +374,37 @@ const ProjectsProvider = ({children}) => {
         setCollaborator(collaborator)
     }
 
-    const deleteCollaborator = () => {
-        console.log(collaborator)
+    const deleteCollaborator = async () => {
+        try {
+            const token = localStorage.getItem('token')
+            if(!token) return 
+
+            const config = {
+                headers: {
+                    "Content-Type": "application/json",
+                    Authorization: `Bearer ${token}`
+                }
+            }
+
+            const { data } = await clientAxios.post(`/projects/delete-collaborator/${project._id}`, {id: collaborator._id}, config)
+
+            const updatedProject = {...project}
+
+            updatedProject.collaborators = updatedProject.collaborators.filter(collaboratorState => collaboratorState._id !== collaborator._id)
+
+            setProject(updatedProject)
+
+            setAlert({
+                msg: data.msg, 
+                error: false
+            })
+
+            setCollaborator({})
+            setModalDeleteCollaborator(false)
+
+        } catch (error) {
+            console.log(error.response)
+        }
     }
 
     return(

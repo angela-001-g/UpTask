@@ -18,6 +18,6 @@ router.route("/:id").get(checkAuth, getProject).put(checkAuth, editProject).dele
 
 router.post("/collaborators", checkAuth, searchCollaborator)
 router.post("/collaborators/:id", checkAuth, addCollaborator)
-router.delete("/collaborators/:id", checkAuth, deleteCollaborator)
+router.post("/delete-collaborator/:id", checkAuth, deleteCollaborator)
 
 export default router
