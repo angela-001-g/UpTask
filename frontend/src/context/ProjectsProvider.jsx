@@ -146,10 +146,14 @@ const ProjectsProvider = ({children}) => {
             setProject(data)
             setAlert({})
         } catch (error) {
+            navigate('/projects')
             setAlert({
                 msg: error.response.data.msg, 
                 error: true
             })
+            setTimeout(() => {
+                setAlert({})
+            }, 2000)
         } finally {
             setCharging(false)
         }
