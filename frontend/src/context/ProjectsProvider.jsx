@@ -425,7 +425,13 @@ const ProjectsProvider = ({children}) => {
 
             const { data } = await clientAxios.post(`/tasks/status/${id}`, {}, config)
 
-            console.log(data)
+            const updatedProject = {...project}
+            updatedProject.tasks = updatedProject.tasks.map(stateTask => stateTask._id === data._id ? data : stateTask)
+
+            setProject(updatedProject)
+            setTask({})
+            setAlert({})
+
         } catch (error) {
             console.log(error.response)
         }

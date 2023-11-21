@@ -9,8 +9,6 @@ const Task = ({task}) => {
 
     const { description, name, priority, deadline, status, _id } = task
 
-    console.log(task)
-
     const admin = useAdmin()
 
   return ( 

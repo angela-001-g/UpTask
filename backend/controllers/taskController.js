@@ -104,7 +104,23 @@ const deleteTask = async(req, res) => {
 } 
 
 const changeStatus = async(req, res) => {
-    console.log(req.params.id)
+    const { id } = req.params;
+
+    const task = await Task.findById(id).populate("project")
+
+    if(!task){
+        const error = new Error('Task not found')
+        return res.status(404).json({msg: error.message})
+    }
+
+    if(task.project.creator.toString() !== req.user._id.toString() && !task.project.collaborators.some(collaborator => collaborator._id.toString() === req.user._id.toString())){
+        const error = new Error('Invalid Action')
+        return res.status(403).json({msg: error.message})
+    }
+
+    task.status = !task.status
+    await task.save()
+    res.json(task)
 } 
 
 export {
