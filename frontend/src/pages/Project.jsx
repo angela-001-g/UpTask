@@ -7,19 +7,34 @@ import ModalDeleteTask from '../components/ModalDeleteTask'
 import Task from '../components/Task'
 import Collaborator from '../components/Collaborator'
 import ModalDeleteCollaborator from '../components/ModalDeleteCollaborator'
+import io from 'socket.io-client'
+
+let socket; 
 
 const Project = () => {
+  
+  const { getProject, project, charging, handleModalTask } = useProjects()
 
   const params = useParams()
-
-  const { getProject, project, charging, handleModalTask } = useProjects()
- 
   const admin = useAdmin()
+
 
   useEffect(() => {
     getProject(params.id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
+
+  useEffect(() => {
+    socket = io(import.meta.env.VITE_BACKEND_URL)
+    socket.emit('open project', params.id)
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
+  useEffect(() => {
+    socket.on('response', (person) => {
+      console.log(person)
+    })
+  })
 
   const { name } = project
 

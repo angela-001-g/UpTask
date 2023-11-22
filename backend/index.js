@@ -55,11 +55,11 @@ const io = new Server(serv, {
 })
 
 io.on('connection', (socket) => {
-
+    console.log('Conected to Socket.io')
     // Define socket.io events
-    socket.on('prueba', (name) => {
-        console.log('Prueba desde socket.io', name)
+
+    socket.on('open project', (project) => {
+        socket.join(project)
     })
 
-    socket.emit('respuesta', { name: 'Ange' })
 })
