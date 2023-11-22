@@ -28,7 +28,7 @@ const getProject = async(req, res) => {
     let project; 
     try {
         const id = new mongoose.Types.ObjectId(req.params.id.trim());
-        project = await Project.findById(id).populate('tasks').populate('collaborators', 'name email')
+        project = await Project.findById(id).populate({ path: 'tasks', populate: {path: 'complete', select: 'name'}}).populate('collaborators', 'name email')
         if(!project){
             const error = new Error('Project not found')
             return res.status(404).json({msg: error.message})

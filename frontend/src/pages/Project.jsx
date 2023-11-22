@@ -23,6 +23,8 @@ const Project = () => {
 
   const { name } = project
 
+  console.log(project)
+
   if(charging) return '...'
 
   console.log(project)

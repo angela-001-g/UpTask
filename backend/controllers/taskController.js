@@ -123,8 +123,12 @@ const changeStatus = async(req, res) => {
     }
 
     task.status = !task.status
+    task.complete = req.user._id
     await task.save()
-    res.json(task)
+
+    const storageTask = await Task.findById(id).populate("project").populate('complete')
+
+    res.json(storageTask)
 } 
 
 export {
