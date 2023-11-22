@@ -1,6 +1,11 @@
 import { Link } from "react-router-dom"
+import useProjects from "../hooks/useProjects"
+import Search from "./Search"
 
 const Header = () => {
+
+    const { handleSearch } = useProjects()
+
   return (
     <>
         <header className="px-4 py-5 bg-white border-b">
@@ -11,6 +16,7 @@ const Header = () => {
                     <button
                         className="font-bold uppercase"
                         type="button"
+                        onClick={handleSearch}
                     >Search Project</button>
                     <Link
                         to="/projects"
@@ -22,6 +28,7 @@ const Header = () => {
                     >
                         Sign Off
                     </button>
+                    <Search />
                 </div>
             </div>
         </header>
