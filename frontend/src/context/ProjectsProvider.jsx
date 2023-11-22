@@ -214,12 +214,8 @@ const ProjectsProvider = ({children}) => {
                     Authorization: `Bearer ${token}`
                 }
             }
-
-            console.log(task)
             
             const {data} = await clientAxios.post(`/tasks`, task, config)
-
-            console.log(data)
 
             // Agregar la tarea al state
             
