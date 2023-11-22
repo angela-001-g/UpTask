@@ -60,4 +60,6 @@ io.on('connection', (socket) => {
     socket.on('prueba', (name) => {
         console.log('Prueba desde socket.io', name)
     })
+
+    socket.emit('respuesta', { name: 'Ange' })
 })
