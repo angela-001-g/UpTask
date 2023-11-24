@@ -36,6 +36,12 @@ const Project = () => {
     })
   })
 
+  useEffect(() => {
+    socket.on('added task', (newTask) => {
+      console.log(newTask)
+    })
+  })
+
   const { name } = project
 
   if(charging) return '...'

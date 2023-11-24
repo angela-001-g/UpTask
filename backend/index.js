@@ -62,4 +62,9 @@ io.on('connection', (socket) => {
         socket.join(project)
     })
 
+    socket.on('new task', task => {
+        const project = task.project
+        socket.on(project).emit('added task', task)
+    })
+
 })

@@ -2,6 +2,9 @@
 import { useState, useEffect, createContext } from "react";
 import clientAxios from "../config/clientAxios";
 import { useNavigate } from 'react-router-dom'
+import io from 'socket.io-client'
+
+let socket; 
 
 const ProjectsContext = createContext();
 
@@ -42,6 +45,10 @@ const ProjectsProvider = ({children}) => {
             }
         }
         getProjects()
+    }, [])
+
+    useEffect(() => {
+        socket = io(import.meta.env.VITE_BACKEND_URL)
     }, [])
 
     const showAlert = alert => {
@@ -216,15 +223,19 @@ const ProjectsProvider = ({children}) => {
             }
             
             const {data} = await clientAxios.post(`/tasks`, task, config)
-
-            // Agregar la tarea al state
             
+            // Agregar la tarea al state
+
             const updateProject = {...project}
-            updateProject.tasks = [...project.task, data]
+            updateProject.tasks = updateProject.tasks.map(taskState => taskState._id === data._id ? data : taskState )
 
             setProject(updateProject)
             setAlert({})
             setModalFormTask(false)
+
+            // Socket.io 
+
+            socket.emit('new task', data)
 
         } catch (error) {
             console.log(error)
