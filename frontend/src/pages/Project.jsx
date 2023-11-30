@@ -9,7 +9,7 @@ import Collaborator from '../components/Collaborator'
 import ModalDeleteCollaborator from '../components/ModalDeleteCollaborator'
 import io from 'socket.io-client'
 
-let socket; 
+const socket = io(import.meta.env.VITE_BACKEND_URL)
 
 const Project = () => {
   
@@ -25,22 +25,17 @@ const Project = () => {
   }, [])
 
   useEffect(() => {
-    socket = io(import.meta.env.VITE_BACKEND_URL)
-    socket.emit('open project', params.id)
+
+    socket?.emit('open project', params.id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-
+// De pronto, solo de pronto, algunos cambios importantes esten mediados por mi manera de hacer las cosas, HAY QUE HACER LAS COSAS
   useEffect(() => {
-    socket.on('response', (person) => {
-      console.log(person)
-    })
-  })
-
-  useEffect(() => {
-    socket.on('added task', (newTask) => {
+    socket?.on('added task', newTask => {
+      console.log('hola')
       console.log(newTask)
     })
-  })
+  }, [])
 
   const { name } = project
 

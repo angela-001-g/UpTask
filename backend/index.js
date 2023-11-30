@@ -55,16 +55,17 @@ const io = new Server(serv, {
 })
 
 io.on('connection', (socket) => {
-    console.log('Conected to Socket.io')
     // Define socket.io events
 
     socket.on('open project', (project) => {
         socket.join(project)
     })
 
-    socket.on('new task', task => {
-        const project = task.project
-        socket.on(project).emit('added task', task)
+    socket.on('new task', (task) => {
+        console.log('aqui')
+        console.log(task)
+        socket.emit('added task', task.project)
+        
     })
 
 })
