@@ -61,6 +61,8 @@ io.on('connection', (socket) => {
         socket.join(project)
     })
 
+    // Dear Lord When I GTH
+
     socket.on('new task', (task) => {
         console.log('aqui')
         console.log(task)

@@ -29,7 +29,7 @@ const Project = () => {
     socket?.emit('open project', params.id)
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
-// De pronto, solo de pronto, algunos cambios importantes esten mediados por mi manera de hacer las cosas, HAY QUE HACER LAS COSAS
+
   useEffect(() => {
     socket?.on('added task', newTask => {
       console.log('hola')
