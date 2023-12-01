@@ -30,6 +30,8 @@ const Project = () => {
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
+  // Socket.io activation no longer
+
   useEffect(() => {
     socket?.on('added task', newTask => {
       console.log('hola')
